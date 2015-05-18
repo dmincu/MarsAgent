@@ -14,16 +14,21 @@ public class GenericAgent extends Agent {
 	boolean isDead;
 	boolean canGoHome;
 	
-	double speed, x, y, radius;
+	double speed, radius;
+	
+	Coord coords;
 	
 	GenericAgent() {
 		isReactive = true;
 		isDead = false;
 		canGoHome = false;
-		x = 0;
-		y = 0;
+		coords = new Coord(0, 0);
 		speed = 1;
 		radius = 1;
+	}
+	
+	public Coord getCoords() {
+		return coords;
 	}
 	
 	public void draw(DrawScene drawer) {
@@ -45,7 +50,7 @@ public class GenericAgent extends Agent {
 			c = new Color(0, 0, 0);
 		}
 
-		this.panelCol = drawer.drawCircle(this.x, this.y, this.radius, c);
+		this.panelCol = drawer.drawCircle(this.coords.x, this.coords.y, this.radius, c);
 	}
 
 }
