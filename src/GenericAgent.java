@@ -8,6 +8,8 @@ public class GenericAgent extends Agent {
 	
 	JPanel panelCol = null;
 	
+	Grid grid;
+	
 	public static final String GO_HOME = "COME HOME";
 	
 	boolean isReactive;

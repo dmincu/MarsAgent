@@ -7,6 +7,8 @@ public class ReactiveAgent extends GenericAgent {
 	
 	ReactiveAgent() {
 		super();
+		
+		this.isReactive = true;
 	}
 	
 	protected void setup() {
@@ -23,6 +25,22 @@ public class ReactiveAgent extends GenericAgent {
 	
 	public void move() {
 		
+	}
+	
+	public boolean moveUp() {
+		return false;
+	}
+	
+	public boolean moveDown() {
+		return false;
+	}
+
+	public boolean moveLeft() {
+		return false;
+	}
+	
+	public boolean moveRight() {
+		return false;
 	}
 	
 	public void returnHome() {
