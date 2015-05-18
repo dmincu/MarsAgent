@@ -32,6 +32,7 @@ public class DrawScene {
 		frmMain = new JFrame();
         frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frmMain.setSize((int)dim_x + 100, (int)dim_y + 100);
+        frmMain.setVisible(true);
 	}
 
 }
