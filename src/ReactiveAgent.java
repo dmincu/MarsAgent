@@ -1,10 +1,13 @@
 import jade.core.*;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 public class ReactiveAgent extends GenericAgent {
+	
+	ReactiveAgent() {
+		super();
+	}
 	
 	protected void setup() {
 		System.out.println("Hello. My name is " + this.getLocalName());
@@ -14,9 +17,15 @@ public class ReactiveAgent extends GenericAgent {
 		while (!canGoHome) {
 			move();
 		}
+		
+		returnHome();
 	}
 	
 	public void move() {
+		
+	}
+	
+	public void returnHome() {
 		
 	}
 
@@ -38,6 +47,7 @@ class ReactiveResponderBehaviour extends CyclicBehaviour {
 
 		if (aclMessage != null) {
 			System.out.println(myAgent.getLocalName() + ": I receive message.\n" + aclMessage);
+			
 			String content = aclMessage.getContent();
 			
 			if (content.equals(agent.GO_HOME)) {
