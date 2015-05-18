@@ -1,9 +1,10 @@
 import java.awt.Color;
+import jade.core.*;
 
 import javax.swing.JPanel;
 
 
-public class Agent {
+public class GenericAgent extends Agent {
 	
 	JPanel panelCol = null;
 	
@@ -12,7 +13,7 @@ public class Agent {
 	
 	double speed, x, y, radius;
 	
-	Agent() {
+	GenericAgent() {
 		isReactive = true;
 		isDead = false;
 		x = 0;

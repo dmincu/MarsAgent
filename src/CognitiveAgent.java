@@ -1,4 +1,5 @@
+import jade.core.*;
 
-public class CognitiveAgent extends Agent {
+public class CognitiveAgent extends GenericAgent {
 
 }
