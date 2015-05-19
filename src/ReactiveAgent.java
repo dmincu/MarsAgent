@@ -7,12 +7,15 @@ import jade.lang.acl.MessageTemplate;
 
 public class ReactiveAgent extends GenericAgent {
 	
+	int capacity;
+	
 	Random r = new Random();
 	
 	ReactiveAgent() {
 		super();
 		
 		this.isReactive = true;
+		this.capacity = 0;
 	}
 	
 	protected void setup() {
@@ -101,7 +104,7 @@ public class ReactiveAgent extends GenericAgent {
 	}
 	
 	public void pickUp() {
-		this.resourcesGathered++;
+		this.resourcesGathered += this.grid.getResourceValue(this.coords);
 		this.grid.removeResource(this.coords);
 	}
 	
