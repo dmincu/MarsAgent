@@ -8,9 +8,12 @@ import jade.lang.acl.MessageTemplate;
 public class ReactiveAgent extends GenericAgent {
 	
 	Random r = new Random();
+	DrawScene drawer;
 	
-	ReactiveAgent() {
-		super();
+	ReactiveAgent(DrawScene d, Grid g) {
+		super(g);
+		grid.addSearchAgent(this.coords);
+		drawer = d;
 		
 		this.isReactive = true;
 	}
@@ -50,6 +53,8 @@ public class ReactiveAgent extends GenericAgent {
 		}
 		
 		this.grid.addSearchAgent(this.coords);
+		//test
+		this.draw(drawer);
 	}
 	
 	public void move() {
