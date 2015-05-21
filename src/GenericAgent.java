@@ -8,15 +8,23 @@ public class GenericAgent extends Agent {
 	
 	JPanel panelCol = null;
 	
+	Grid grid;
+	
 	public static final String GO_HOME = "COME HOME";
+	public static final int UP = 0;
+	public static final int LEFT = 1;
+	public static final int RIGHT = 2;
+	public static final int DOWN = 3;
 	
 	boolean isReactive;
 	boolean isDead;
 	boolean canGoHome;
 	
+	int resourcesGathered = 0;
+	
 	double speed, radius;
 	
-	Coord coords;
+	Coord coords, base;
 	
 	GenericAgent() {
 		isReactive = true;
