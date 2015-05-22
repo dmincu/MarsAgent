@@ -23,12 +23,13 @@ public class Mars {
 	}
 	
 	public static void runFirstPart() {
-		while (b.isResourceLevelAchieved()) {
+		while (!b.isResourceLevelAchieved()) {
 			if (b.canSpawnSearchAgent()) {
 				b.spawnSearchAgent();
 			}
 			
 			b.moveSearchAgents();
+			
 			b.draw(drawer);
 		}
 	}

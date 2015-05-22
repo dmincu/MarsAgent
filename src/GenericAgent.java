@@ -32,7 +32,7 @@ public class GenericAgent extends Agent {
 		canGoHome = false;
 		coords = c;
 		speed = 1;
-		radius = 10;
+		radius = 20;
 		grid = g;
 	}
 	
