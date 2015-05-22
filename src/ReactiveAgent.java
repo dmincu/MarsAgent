@@ -169,9 +169,11 @@ public class ReactiveAgent extends GenericAgent {
 		giveResourcesToBase();
 		
 		// Agents will be removed sequentially
-		this.isDead = true;
-		this.base.reactiveAgents.remove(0);
-		this.base.draw();
+		if (this.canGoHome) {
+			this.isDead = true;
+			this.base.reactiveAgents.remove(this);
+			this.base.draw();
+		}
 	}
 
 }
