@@ -15,15 +15,17 @@ public class Base extends Agent {
 	ArrayList<ReactiveAgent> reactiveAgents = new ArrayList<>();
 	ArrayList<CognitiveAgent> cognitiveAgents = new ArrayList<CognitiveAgent>();
 	
-	int resourceLimit;
+	int resourceLimit, searchAgentLimit;
+	int currentNumberOfResources = 0;
 	
 	Base() {
 		
 	}
 	
-	Base(Grid g, int limit) {
+	Base(Grid g, int limit, int searchAgentLimit) {
 		this.grid = g;
 		this.resourceLimit = limit;
+		this.searchAgentLimit = searchAgentLimit;
 		
 		this.coords = g.base;
 		
@@ -36,6 +38,23 @@ public class Base extends Agent {
 		}
 	}
 
+	public boolean isResourceLevelAchieved() {
+		return currentNumberOfResources >= resourceLimit;
+	}
+	
+	public boolean canSpawnSearchAgent() {
+		return reactiveAgents.size() <= searchAgentLimit;
+	}
+	
+	public void spawnSearchAgent() {
+		
+	}
+	
+	public void moveSearchAgents() {
+		for (int i = 0; i < reactiveAgents.size(); i++) {
+			reactiveAgents.get(i).move();
+		}
+	}
 	
 	public void draw(DrawScene drawer) {
 		if (this.basePanel != null) {

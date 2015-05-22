@@ -4,6 +4,7 @@ import java.awt.Color;
 public class Mars {
 	
 	public static final int MAXLIMIT = 4;
+	public static final int MAXSEARCHAGENTLIMIT = 3;
 	
 	static Base b;
 	static Grid grid;
@@ -17,11 +18,24 @@ public class Mars {
 		grid.initGridFromFile("map.txt");
 		grid.drawGrid(drawer);
 		
-		b = new Base(grid, MAXLIMIT);
+		b = new Base(grid, MAXLIMIT, MAXSEARCHAGENTLIMIT);
 		b.draw(drawer);
+	}
+	
+	public static void runFirstPart() {
+		while (b.isResourceLevelAchieved()) {
+			if (b.canSpawnSearchAgent()) {
+				b.spawnSearchAgent();
+			}
+			
+			b.moveSearchAgents();
+			b.draw(drawer);
+		}
 	}
 	
 	public static void main(String[] args) {
 		init();
+		
+		runFirstPart();
 	}
 }
