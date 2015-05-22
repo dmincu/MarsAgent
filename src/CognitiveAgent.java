@@ -134,10 +134,10 @@ public class CognitiveAgent extends GenericAgent {
 	}
 	
 	public boolean moveUp() {
-		this.coords.y++;
+		this.coords.y += this.radius;
 		
 		if (this.grid.isObstacleAt(this.coords)) {
-			this.coords.y--;
+			this.coords.y -= this.radius;
 			return false;
 		}
 		
@@ -145,10 +145,10 @@ public class CognitiveAgent extends GenericAgent {
 	}
 	
 	public boolean moveDown() {
-		this.coords.y--;
+		this.coords.y -= this.radius;
 		
 		if (this.grid.isObstacleAt(this.coords)) {
-			this.coords.y++;
+			this.coords.y += this.radius;
 			return false;
 		}
 		
@@ -156,10 +156,10 @@ public class CognitiveAgent extends GenericAgent {
 	}
 
 	public boolean moveLeft() {
-		this.coords.x--;
+		this.coords.x -= this.radius;
 		
 		if (this.grid.isObstacleAt(this.coords)) {
-			this.coords.x++;
+			this.coords.x += this.radius;
 			return false;
 		}
 		
@@ -167,10 +167,10 @@ public class CognitiveAgent extends GenericAgent {
 	}
 	
 	public boolean moveRight() {
-		this.coords.x++;
+		this.coords.x += this.radius;
 		
 		if (this.grid.isObstacleAt(this.coords)) {
-			this.coords.x--;
+			this.coords.x -= this.radius;
 			return false;
 		}
 		

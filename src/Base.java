@@ -81,6 +81,11 @@ public class Base extends Agent {
 		}
 	}
 	
+	public void spawnCarrierAgent() {
+		Coord up = new Coord(coords.x, coords.y + RADIUS);
+		cognitiveAgents.add(new CognitiveAgent(grid, this, up));
+	}
+	
 	public void moveSearchAgents() {
 		System.out.println("[moveSearchAgents] move");
 		for (int i = 0; i < reactiveAgents.size(); i++) {
@@ -88,6 +93,12 @@ public class Base extends Agent {
 		}
 	}
 	
+	public void moveCarrierAgents() {
+		for (int i = 0; i < cognitiveAgents.size(); i++) {
+			cognitiveAgents.get(i).move();
+		}
+}
+			
 	public void receiveResources(int value) {
 		this.currentNumberOfResources += value;
 	}
