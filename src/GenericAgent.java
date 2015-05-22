@@ -26,13 +26,13 @@ public class GenericAgent extends Agent {
 	
 	Coord coords, base;
 	
-	GenericAgent(Grid g) {
+	GenericAgent(Grid g, Coord c) {
 		isReactive = true;
 		isDead = false;
 		canGoHome = false;
-		coords = new Coord(0, 0);
+		coords = c;
 		speed = 1;
-		radius = 30;
+		radius = 10;
 		grid = g;
 	}
 	

@@ -10,12 +10,10 @@ public class ReactiveAgent extends GenericAgent {
 	int capacity;
 	
 	Random r = new Random();
-	DrawScene drawer;
 	
-	ReactiveAgent(DrawScene d, Grid g) {
-		super(g);
+	ReactiveAgent(Grid g, Coord c) {
+		super(g, c);
 		grid.addSearchAgent(this.coords);
-		drawer = d;
 		
 		this.isReactive = true;
 		this.capacity = 0;
@@ -56,8 +54,6 @@ public class ReactiveAgent extends GenericAgent {
 		}
 		
 		this.grid.addSearchAgent(this.coords);
-		//test
-		this.draw(drawer);
 	}
 	
 	public void move() {
