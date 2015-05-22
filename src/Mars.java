@@ -22,14 +22,19 @@ public class Mars {
 	}
 	
 	public static void runFirstPart() {
+		boolean hasCarrier = false;
 		while (!b.isResourceLevelAchieved()) {
 			if (b.canSpawnSearchAgent()) {
 				System.out.println("[runFirstPart] spawned");
 				b.spawnSearchAgent();
 			}
+			if (!isCarrier) {
+				b.spawnCarrierAgent();
+				hasCarrier = true;
+			}
 			
 			b.moveSearchAgents();
-			
+			b.moveCarrierAgents();
 			b.draw(drawer);
 		}
 	}
