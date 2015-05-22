@@ -13,5 +13,17 @@ public class Coord {
 		this.x = x;
 		this.y = y;
 	}
+	
+	@Override
+	public int hashCode() {
+		return x * 1000 + y;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		Coord otherC = (Coord) other;
+		
+		return this.x == otherC.x && this.y == otherC.y;
+	}
 
 }

@@ -32,11 +32,11 @@ public class Base extends Agent {
 		this.coords = g.base;
 		
 		for (int i = 0; i < g.searchAgents.size(); i++) {
-			reactiveAgents.add(new ReactiveAgent(g, g.searchAgents.get(i)));
+			reactiveAgents.add(new ReactiveAgent(g, this, g.searchAgents.get(i)));
 		}
 		
 		for (int i = 0; i < g.carrierAgents.size(); i++) {
-			cognitiveAgents.add(new CognitiveAgent(g, g.carrierAgents.get(i)));
+			cognitiveAgents.add(new CognitiveAgent(g, this, g.carrierAgents.get(i)));
 		}
 	}
 
@@ -45,7 +45,7 @@ public class Base extends Agent {
 	}
 	
 	public boolean canSpawnSearchAgent() {
-		return reactiveAgents.size() <= searchAgentLimit;
+		return reactiveAgents.size() < searchAgentLimit;
 	}
 	
 	public void spawnSearchAgent() {
@@ -58,22 +58,22 @@ public class Base extends Agent {
 		switch (r.nextInt() % 4) {
 		case 0:
 			if (!grid.isObstacleAt(up)) {
-				reactiveAgents.add(new ReactiveAgent(grid, up));
+				reactiveAgents.add(new ReactiveAgent(grid, this, up));
 			}
 			break;
 		case 1:
 			if (!grid.isObstacleAt(down)) {
-				reactiveAgents.add(new ReactiveAgent(grid, down));
+				reactiveAgents.add(new ReactiveAgent(grid, this, down));
 			}
 			break;
 		case 2:
 			if (!grid.isObstacleAt(left)) {
-				reactiveAgents.add(new ReactiveAgent(grid, left));
+				reactiveAgents.add(new ReactiveAgent(grid, this, left));
 			}
 			break;
 		case 3:
 			if (!grid.isObstacleAt(right)) {
-				reactiveAgents.add(new ReactiveAgent(grid, right));
+				reactiveAgents.add(new ReactiveAgent(grid, this, right));
 			}
 			break;
 		}
@@ -85,14 +85,16 @@ public class Base extends Agent {
 		}
 	}
 	
+	public void receiveResources(int value) {
+		this.currentNumberOfResources += value;
+	}
+	
 	public void draw(DrawScene drawer) {
 		if (this.basePanel != null) {
 			drawer.frmMain.remove(this.basePanel);
 			drawer.frmMain.revalidate();
 			drawer.frmMain.repaint();
 		}
-
-		System.out.println("[Base][draw] ");
 		
 		Color c = new Color(255, 255, 0);
 

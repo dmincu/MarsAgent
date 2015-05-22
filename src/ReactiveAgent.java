@@ -11,8 +11,8 @@ public class ReactiveAgent extends GenericAgent {
 	
 	Random r = new Random();
 	
-	ReactiveAgent(Grid g, Coord c) {
-		super(g, c);
+	ReactiveAgent(Grid g, Base b, Coord c) {
+		super(g, b, c);
 		grid.addSearchAgent(this.coords);
 		
 		this.isReactive = true;
@@ -57,7 +57,15 @@ public class ReactiveAgent extends GenericAgent {
 	}
 	
 	public void move() {
-		move(r.nextInt() % 4);
+		if (this.grid.isResourceAt(this.coords)) {
+			pickUp();
+			if (this.resourcesGathered > this.capacity) {
+				returnHome();
+			}
+		}
+		
+		if (!this.canGoHome)
+			move(r.nextInt() % 4);
 	}
 	
 	public boolean moveUp() {
@@ -107,29 +115,38 @@ public class ReactiveAgent extends GenericAgent {
 	public void pickUp() {
 		this.resourcesGathered += this.grid.getResourceValue(this.coords);
 		this.grid.removeResource(this.coords);
+		
+		System.out.println("Picked up resource ... ");
+	}
+	
+	public void giveResourcesToBase() {
+		this.base.receiveResources(this.resourcesGathered);
+		this.resourcesGathered = 0;
 	}
 	
 	public void returnHome() {
-		while (this.coords.x != this.base.x &&
-				this.coords.y != this.base.y) {
-			if (this.coords.x > this.base.x) {
-				if (this.coords.y > this.base.y) {
+		while (this.coords.x != this.base.coords.x &&
+				this.coords.y != this.base.coords.y) {
+			if (this.coords.x > this.base.coords.x) {
+				if (this.coords.y > this.base.coords.y) {
 					move(DOWN);
-				} else if (this.coords.y < this.base.y) {
+				} else if (this.coords.y < this.base.coords.y) {
 					move(UP);
 				} else {
 					move(LEFT);
 				}
 			} else {
-				if (this.coords.y > this.base.y) {
+				if (this.coords.y > this.base.coords.y) {
 					move(DOWN);
-				} else if (this.coords.y < this.base.y) {
+				} else if (this.coords.y < this.base.coords.y) {
 					move(UP);
 				} else {
 					move(RIGHT);
 				}
 			}
 		}
+		
+		giveResourcesToBase();
 	}
 
 }
