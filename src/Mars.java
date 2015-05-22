@@ -28,7 +28,8 @@ public class Mars {
 				System.out.println("[runFirstPart] spawned");
 				b.spawnSearchAgent();
 			}
-			if (!isCarrier) {
+			
+			if (!hasCarrier) {
 				b.spawnCarrierAgent();
 				hasCarrier = true;
 			}
