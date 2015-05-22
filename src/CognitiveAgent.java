@@ -26,11 +26,12 @@ public class CognitiveAgent extends GenericAgent {
 		this.comeHome = false;
 		this.target = null;
 		this.r = new Random();
+		grid.addCarrierAgent(c);
 		System.out.println("[CognitiveAgent] constructor");
 	}
 	
 	protected void registerCarrier() {
-		/* bidder registers himself */
+		/* agent registers himself */
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
@@ -43,7 +44,7 @@ public class CognitiveAgent extends GenericAgent {
 		catch (FIPAException fe) {
 			fe.printStackTrace();
 		}
-		System.out.println("[Bidder] Successfully registered");
+		System.out.println("[registerCarrier] Successfully registered");
 	}
 	
 	protected void setup() {
@@ -71,6 +72,7 @@ public class CognitiveAgent extends GenericAgent {
 							}
 						}
 					}
+					performStep();
 			}
 			
 			public void performStep() {
@@ -79,54 +81,69 @@ public class CognitiveAgent extends GenericAgent {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				int dir;
 				
 				switch (state) {
-					case GOTO_RESOURCE:
-						// remove oneself from grid
-						grid.removeCarrierAgent(coords);
-						
+					case GOTO_RESOURCE:						
 						// compute next coordinate
-						int dir = coords.getDirectionTo(target);
-						Coord next = coords.getNextCoord(dir);
+						dir = coords.getDirectionTo(target);
 						
-						// add new coordinates to grid
-						grid.addCarrierAgent(next);
+						if (dir == 0) {
+							//we've reached destination, collect resource
+							resourcesGathered += grid.getResourceValue(coords);
+							grid.removeResource(coords);
+							state = CarrierState.ROAM_AROUND;
+						} else if (!move(dir + 1)) {
+							//if cannot move towards target, move randomly
+							move(r.nextInt() % 4);
+						}
 						
-						// redraw grid
-						//draw(drawer);
 						break;
 					
 					case ROAM_AROUND:
-						move();
+						if (comeHome) { 
+							dir = coords.getDirectionTo(base.coords);
+							if (dir == 0) {
+								// we are home, remove agent
+								System.out.println("[CognitiveAgent] we've reached /home");
+								base.receiveResources(resourcesGathered);
+								resourcesGathered = 0;
+								grid.removeCarrierAgent(coords);
+							} else if (!move(dir + 1)) {
+								move(r.nextInt() % 4);
+							}
+						} else {
+							move(r.nextInt() % 4);
+						}
 				}
-			
-				
 			}
 			
 		}); 	
 	}
 	
-	public void move(int direction) {
-		this.grid.removeSearchAgent(this.coords);
+	public boolean move(int direction) {
+		this.grid.removeCarrierAgent(this.coords);
+		
+		boolean canMove = false;
 		
 		switch (direction) {
 		case UP:
-			moveUp();
+			canMove = moveUp();
 			break;
 		case LEFT:
-			moveLeft();
+			canMove = moveLeft();
 			break;
 		case RIGHT:
-			moveRight();
+			canMove = moveRight();
 			break;
 		case DOWN:
-			moveDown();
+			canMove = moveDown();
 			break;
 		}
 		
-		this.grid.addSearchAgent(this.coords);
-		//test
-		//this.draw(drawer);
+		this.grid.addCarrierAgent(this.coords);
+		
+		return canMove;
 	}
 	
 	public void move() {

@@ -192,11 +192,13 @@ public class Grid {
 	public void removeCarrierAgent(Coord target) {
 		Coord coord = null;
 		int i;
-		for (i = 0; i < searchAgents.size(); i++) 
+		int carriersCount = carrierAgents.size();
+		for (i = carriersCount - 1; i >= 0; i--) {
 			coord = carrierAgents.get(i);
 			if (coord.x == target.x && coord.y == target.y) {
 				carrierAgents.remove(i);
 			}
+		}
 	}
 
 }

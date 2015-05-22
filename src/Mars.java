@@ -1,5 +1,9 @@
 import java.awt.Color;
 
+import jade.core.*;
+import jade.core.Runtime;
+import jade.wrapper.ContainerController;
+
 public class Mars {
 	
 	public static final int MAXLIMIT = 1;
@@ -53,11 +57,21 @@ public class Mars {
 		}
 	}
 	
+	public static void runSecondPart() {
+		Base base = new Base();
+		base.initServer();
+		Grid g = new Grid();
+		GenericAgent agent = new GenericAgent(g, base, new Coord(0, 0));
+		agent.connectToBase();
+	}
+	
+	
 	public static void main(String[] args) {
 		init();
 		for (int i = 0; i < grid.searchAgents.size(); i++) 
 			System.out.println(grid.searchAgents.get(i));
 		
 		runFirstPart();
+		//runSecondPart();
 	}
 }

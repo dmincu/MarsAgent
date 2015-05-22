@@ -3,10 +3,12 @@ public class Coord {
 	
 	int x;
 	int y;
+	int radius;
 	
 	Coord() {
 		x = 0;
 		y = 0;
+		radius = 20;
 	}
 	
 	Coord(int x, int y) {
@@ -52,13 +54,13 @@ public class Coord {
 	public Coord getNextCoord(int direction) {
 		/* UP */
 		if (direction == 1) {
-			return new Coord(x, y + 1);
+			return new Coord(x, y + radius);
 		} else if (direction == 2) { // LEFT
-			return new Coord(x - 1, y);
+			return new Coord(x - radius, y);
 		} else if (direction == 3) { // RIGHT
-			return new Coord(x + 1, y);
+			return new Coord(x + radius, y);
 		} else if (direction == 4) { // DOWN
-			return new Coord(x, y - 1);
+			return new Coord(x, y - radius);
 		} else 
 			return new Coord(x, y);
 	}

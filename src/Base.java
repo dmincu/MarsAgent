@@ -1,8 +1,17 @@
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
 import jade.core.*;
+
 import javax.swing.JPanel;
 
 
@@ -10,6 +19,7 @@ public class Base extends Agent {
 
 	public static final int RADIUS = 20;
 	
+	ServerSocket serverSocket;
 	Coord coords;
 	JPanel basePanel;
 	Grid grid;
@@ -22,7 +32,15 @@ public class Base extends Agent {
 	int currentNumberOfResources = 0;
 	
 	Base() {
-		
+		try 
+        { 
+            serverSocket = new ServerSocket(11111); 
+        } 
+        catch(IOException ioe) 
+        { 
+            System.out.println("Could not create server socket on port 11111. Quitting."); 
+            System.exit(-1); 
+        } 
 	}
 	
 	Base(DrawScene d, Grid g, int limit, int searchAgentLimit) {
@@ -124,4 +142,76 @@ public class Base extends Agent {
 			cognitiveAgents.get(i).draw(drawer);
 		}
 	}
+	
+	public void initServer() {
+		System.out.println("[initServer] waiting for connection");
+		Socket client = null;
+		try {
+			client = serverSocket.accept();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("Accepted a connection");
+		new AgentSocketThread(this, client);
+	}
+}
+
+/* socket for base-agents communication */
+class AgentSocketThread implements Runnable {
+	Socket socket;
+	Base base;
+	BufferedReader reader;
+	BufferedWriter writer;
+	
+	public AgentSocketThread(Base b, Socket sk) {
+		base = b;
+		socket = sk;
+		new Thread(this).start();
+	}
+	
+	private void sendMessage (String line) {
+		try {
+			this.writer.write(line);
+			this.writer.newLine();
+			this.writer.flush();
+		} catch (IOException e) {
+			System.out.println("Failed to send the message <" + line + "> to the associated client");
+			return;
+		}
+	}
+
+	@Override
+	public void run() {
+		try {
+			reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		} catch (IOException e) {
+			System.out.println("Failed to create a reader for a client socket");
+			e.printStackTrace();
+			return;
+		}
+		
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+		} catch (IOException e) {
+			System.out.println("Failed to create a writer for a client socket");
+			e.printStackTrace();
+			return;
+		}
+
+		String line = null;
+		boolean connected = true;
+		while (connected) {
+			try {
+				line = reader.readLine();
+			} catch (IOException e) {
+				System.out.println("An exception was caught while trying to read a message from the client socket");
+				e.printStackTrace();
+				break;
+			}
+			System.out.println("[Base] Received " + line);
+		}
+	}
+	
 }
