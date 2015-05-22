@@ -81,7 +81,7 @@ public class Base extends Agent {
 	
 	public void moveSearchAgents() {
 		System.out.println("[moveSearchAgents] move");
-		for (int i = 0; i < 1; i++) { //i < reactiveAgents.size(); i++) {
+		for (int i = 0; i < reactiveAgents.size(); i++) {
 			reactiveAgents.get(i).move();
 		}
 	}
