@@ -1,20 +1,43 @@
 import java.awt.Color;
 
-
 public class Mars {
 	
-	public void init() {
+	public static final int MAXLIMIT = 4;
+	public static final int MAXSEARCHAGENTLIMIT = 3;
+	
+	static Base b;
+	static Grid grid;
+	static DrawScene drawer;
+	
+	public static void init() {
+		drawer = new DrawScene();
+		drawer.init(500, 180);
 		
+		grid = new Grid();
+		grid.initGridFromFile("map.txt");
+		grid.drawGrid(drawer);
+		
+		b = new Base(grid, MAXLIMIT, MAXSEARCHAGENTLIMIT);
+		b.draw(drawer);
+	}
+	
+	public static void runFirstPart() {
+		while (!b.isResourceLevelAchieved()) {
+			if (b.canSpawnSearchAgent()) {
+				System.out.println("[runFirstPart] spawned");
+				b.spawnSearchAgent();
+			}
+			
+			b.moveSearchAgents();
+			b.draw(drawer);
+		}
 	}
 	
 	public static void main(String[] args) {
-		DrawScene drawer = new DrawScene();
-		drawer.init(300, 400);
-		Grid grid = new Grid();
+		init();
+		for (int i = 0; i < grid.searchAgents.size(); i++) 
+			System.out.println(grid.searchAgents.get(i));
 		
-		//drawer.drawCircle(100, 100, 50, new Color(0));
-		ReactiveAgent agent = new ReactiveAgent(drawer, grid);
-		agent.move(2);
-		//drawer.drawCircle(1, 0, 50, new Color(50));
+		runFirstPart();
 	}
 }

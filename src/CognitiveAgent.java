@@ -19,8 +19,8 @@ public class CognitiveAgent extends GenericAgent {
 	boolean comeHome;
 	Random r;
 	
-	CognitiveAgent(Grid g) {
-		super(g);
+	CognitiveAgent(Grid g, Coord c) {
+		super(g, c);
 		this.state = CarrierState.ROAM_AROUND;
 		this.isReactive = false;
 		this.comeHome = false;
