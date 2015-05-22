@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
+
 import jade.core.*;
 import javax.swing.JPanel;
 
@@ -47,7 +49,34 @@ public class Base extends Agent {
 	}
 	
 	public void spawnSearchAgent() {
+		Coord up = new Coord(coords.x, coords.y + RADIUS);
+		Coord down = new Coord(coords.x, coords.y - RADIUS);
+		Coord left = new Coord(coords.x - RADIUS, coords.y);
+		Coord right = new Coord(coords.x + RADIUS, coords.y);
 		
+		Random r = new Random();
+		switch (r.nextInt() % 4) {
+		case 0:
+			if (!grid.isObstacleAt(up)) {
+				reactiveAgents.add(new ReactiveAgent(grid, up));
+			}
+			break;
+		case 1:
+			if (!grid.isObstacleAt(down)) {
+				reactiveAgents.add(new ReactiveAgent(grid, down));
+			}
+			break;
+		case 2:
+			if (!grid.isObstacleAt(left)) {
+				reactiveAgents.add(new ReactiveAgent(grid, left));
+			}
+			break;
+		case 3:
+			if (!grid.isObstacleAt(right)) {
+				reactiveAgents.add(new ReactiveAgent(grid, right));
+			}
+			break;
+		}
 	}
 	
 	public void moveSearchAgents() {

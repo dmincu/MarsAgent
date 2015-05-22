@@ -29,6 +29,7 @@ public class Mars {
 			}
 			
 			b.moveSearchAgents();
+			
 			b.draw(drawer);
 		}
 	}
