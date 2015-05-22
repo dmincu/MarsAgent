@@ -3,7 +3,7 @@ import java.awt.Color;
 public class Mars {
 	
 	public static final int MAXLIMIT = 4;
-	public static final int MAXSEARCHAGENTLIMIT = 3;
+	public static final int MAXSEARCHAGENTLIMIT = 5;
 	
 	static Base b;
 	static Grid grid;
@@ -36,7 +36,20 @@ public class Mars {
 			
 			b.moveSearchAgents();
 			b.moveCarrierAgents();
+
+			try {
+			    Thread.sleep(200);
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
+			
+			grid.drawGrid(drawer);
 			b.draw(drawer);
+		}
+		
+		for (int i = 0; i < b.reactiveAgents.size(); i++) {
+			b.reactiveAgents.get(i).canGoHome = true;
+			b.reactiveAgents.get(i).returnHome();
 		}
 	}
 	

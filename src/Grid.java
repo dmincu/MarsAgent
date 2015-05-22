@@ -44,14 +44,19 @@ public class Grid {
 	}
 	
 	public void drawGrid(DrawScene drawer) {
+		ArrayList<Coord> stuffToRemove = new ArrayList<Coord>();
+		
 		for (Map.Entry<Coord, JPanel> entries : resourcePanels.entrySet()) {
 			if (entries.getValue() != null) {
 				drawer.frmMain.remove(entries.getValue());
 				drawer.frmMain.revalidate();
 				drawer.frmMain.repaint();
+				stuffToRemove.add(entries.getKey());
 			}
-			
-			resourcePanels.remove(entries.getKey());
+		}
+		
+		for (int i = 0; i < stuffToRemove.size(); i++) {
+			resourcePanels.remove(stuffToRemove.get(i));
 		}
 
 		for (int i = 0; i < resources.size(); i++) {
@@ -152,6 +157,8 @@ public class Grid {
 		for (Map.Entry<Coord, Integer> entry : resourcesValues.entrySet()) {
 			Coord c = entry.getKey();
 			if (c.x == target.x && c.y == target.y) {
+				System.out.println("Resource removed ... ");
+				resources.remove(c);
 				resourcesValues.remove(entry);
 				return true;
 			}		
@@ -166,14 +173,14 @@ public class Grid {
 	public void removeSearchAgent(Coord target) {
 		Coord coord = null;
 		int i;
-		System.out.println("[removeSearch] " + target.x + ' ' + target.y);
+		//System.out.println("[removeSearch] " + target.x + ' ' + target.y);
 		int searchAgentsCount = searchAgents.size();
 		for (i = searchAgentsCount - 1; i >= 0; i--) {
-			System.out.println("[removeSearch] i = " + i);
+			//System.out.println("[removeSearch] i = " + i);
 			coord = searchAgents.get(i);
 			if (coord.x == target.x && coord.y == target.y) {
 				searchAgents.remove(i);
-				System.out.println("[removeSearch] removed i = " + i);
+				//System.out.println("[removeSearch] removed i = " + i);
 			}
 		}
 	}

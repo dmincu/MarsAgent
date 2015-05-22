@@ -22,9 +22,11 @@ public class GenericAgent extends Agent {
 	
 	double speed, radius;
 	
-	Coord coords, base;
+	Base base;
 	
-	GenericAgent(Grid g, Coord c) {
+	Coord coords;
+	
+	GenericAgent(Grid g, Base b, Coord c) {
 		isReactive = true;
 		isDead = false;
 		canGoHome = false;
@@ -32,6 +34,7 @@ public class GenericAgent extends Agent {
 		speed = 1;
 		radius = 20;
 		grid = g;
+		base = b;
 	}
 	
 	public Coord getCoords() {
@@ -44,8 +47,6 @@ public class GenericAgent extends Agent {
 			drawer.frmMain.revalidate();
 			drawer.frmMain.repaint();
 		}
-
-		System.out.println("[Generic][draw] ");
 		
 		Color c;
 
@@ -59,7 +60,6 @@ public class GenericAgent extends Agent {
 			c = new Color(0, 0, 0);
 		}
 
-		System.out.println("[draw] x = " + this.coords.x + ", y = " + this.coords.y);
 		this.panelCol = drawer.drawCircle(this.coords.x, this.coords.y, this.radius, c);
 	}
 
