@@ -1,6 +1,5 @@
 import java.awt.Color;
 
-
 public class Mars {
 	
 	public static final int MAXLIMIT = 4;
@@ -25,6 +24,7 @@ public class Mars {
 	public static void runFirstPart() {
 		while (!b.isResourceLevelAchieved()) {
 			if (b.canSpawnSearchAgent()) {
+				System.out.println("[runFirstPart] spawned");
 				b.spawnSearchAgent();
 			}
 			
@@ -48,6 +48,8 @@ public class Mars {
 	
 	public static void main(String[] args) {
 		init();
+		for (int i = 0; i < grid.searchAgents.size(); i++) 
+			System.out.println(grid.searchAgents.get(i));
 		
 		runFirstPart();
 	}
