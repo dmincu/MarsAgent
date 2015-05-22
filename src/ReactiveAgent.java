@@ -35,28 +35,32 @@ public class ReactiveAgent extends GenericAgent {
 		returnHome();
 	}
 	
-	public void move(int direction) {
+	public boolean move(int direction) {
 		this.grid.removeSearchAgent(this.coords);
+		
+		boolean canMove = false;
 		
 		switch (direction) {
 		case UP:
-			moveUp();
+			canMove = moveUp();
 			break;
 		case LEFT:
-			moveLeft();
+			canMove = moveLeft();
 			break;
 		case RIGHT:
-			moveRight();
+			canMove = moveRight();
 			break;
 		case DOWN:
-			moveDown();
+			canMove = moveDown();
 			break;
 		}
 		
 		this.grid.addSearchAgent(this.coords);
+		
+		return canMove;
 	}
 	
-	public void move() {
+	public boolean move() {
 		if (this.grid.isResourceAt(this.coords)) {
 			pickUp();
 			if (this.resourcesGathered > this.capacity) {
@@ -65,7 +69,11 @@ public class ReactiveAgent extends GenericAgent {
 		}
 		
 		if (!this.canGoHome)
-			move(r.nextInt() % 4);
+			return move(r.nextInt() % 4);
+		else 
+			returnHome();
+		
+		return false;
 	}
 	
 	public boolean moveUp() {
@@ -125,28 +133,45 @@ public class ReactiveAgent extends GenericAgent {
 	}
 	
 	public void returnHome() {
+		System.out.println("Returning home ... ");
+		
 		while (this.coords.x != this.base.coords.x &&
 				this.coords.y != this.base.coords.y) {
+			boolean canPerformMove = false;
+			
 			if (this.coords.x > this.base.coords.x) {
 				if (this.coords.y > this.base.coords.y) {
-					move(DOWN);
+					canPerformMove = move(DOWN);
 				} else if (this.coords.y < this.base.coords.y) {
-					move(UP);
+					canPerformMove = move(UP);
 				} else {
-					move(LEFT);
+					canPerformMove = move(LEFT);
 				}
 			} else {
 				if (this.coords.y > this.base.coords.y) {
-					move(DOWN);
+					canPerformMove = move(DOWN);
 				} else if (this.coords.y < this.base.coords.y) {
-					move(UP);
+					canPerformMove = move(UP);
 				} else {
-					move(RIGHT);
+					canPerformMove = move(RIGHT);
 				}
 			}
+			
+			if (!canPerformMove) {
+				move(r.nextInt() % 4);
+			}
+			
+			this.base.draw();
 		}
 		
+		System.out.println("Home ... ");
+		
 		giveResourcesToBase();
+		
+		// Agents will be removed sequentially
+		this.isDead = true;
+		this.base.reactiveAgents.remove(0);
+		this.base.draw();
 	}
 
 }

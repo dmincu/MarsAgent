@@ -2,7 +2,7 @@ import java.awt.Color;
 
 public class Mars {
 	
-	public static final int MAXLIMIT = 4;
+	public static final int MAXLIMIT = 1;
 	public static final int MAXSEARCHAGENTLIMIT = 5;
 	
 	static Base b;
@@ -17,8 +17,8 @@ public class Mars {
 		grid.initGridFromFile("map.txt");
 		grid.drawGrid(drawer);
 		
-		b = new Base(grid, MAXLIMIT, MAXSEARCHAGENTLIMIT);
-		b.draw(drawer);
+		b = new Base(drawer, grid, MAXLIMIT, MAXSEARCHAGENTLIMIT);
+		b.draw();
 	}
 	
 	public static void runFirstPart() {
@@ -44,7 +44,7 @@ public class Mars {
 			}
 			
 			grid.drawGrid(drawer);
-			b.draw(drawer);
+			b.draw();
 		}
 		
 		for (int i = 0; i < b.reactiveAgents.size(); i++) {
