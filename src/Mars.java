@@ -9,8 +9,10 @@ public class Mars {
 	
 	public static void main(String[] args) {
 		DrawScene drawer = new DrawScene();
-		drawer.init(300, 400);
+		drawer.init(500, 180);
 		Grid grid = new Grid();
+		grid.initGridFromFile("map.txt");
+		grid.drawGrid(drawer);
 		
 		//drawer.drawCircle(100, 100, 50, new Color(0));
 		ReactiveAgent agent = new ReactiveAgent(drawer, grid);
