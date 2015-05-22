@@ -13,6 +13,7 @@ public class Base extends Agent {
 	Coord coords;
 	JPanel basePanel;
 	Grid grid;
+	DrawScene drawer;
 	
 	ArrayList<ReactiveAgent> reactiveAgents = new ArrayList<>();
 	ArrayList<CognitiveAgent> cognitiveAgents = new ArrayList<CognitiveAgent>();
@@ -24,7 +25,8 @@ public class Base extends Agent {
 		
 	}
 	
-	Base(Grid g, int limit, int searchAgentLimit) {
+	Base(DrawScene d, Grid g, int limit, int searchAgentLimit) {
+		this.drawer = d;
 		this.grid = g;
 		this.resourceLimit = limit;
 		this.searchAgentLimit = searchAgentLimit;
@@ -90,7 +92,7 @@ public class Base extends Agent {
 		this.currentNumberOfResources += value;
 	}
 	
-	public void draw(DrawScene drawer) {
+	public void draw() {
 		if (this.basePanel != null) {
 			drawer.frmMain.remove(this.basePanel);
 			drawer.frmMain.revalidate();

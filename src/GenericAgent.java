@@ -56,11 +56,9 @@ public class GenericAgent extends Agent {
 			c = new Color(255, 0, 0);
 		}
 
-		if (isDead) {
-			c = new Color(0, 0, 0);
+		if (!isDead) {
+			this.panelCol = drawer.drawCircle(this.coords.x, this.coords.y, this.radius, c);
 		}
-
-		this.panelCol = drawer.drawCircle(this.coords.x, this.coords.y, this.radius, c);
 	}
 
 }
